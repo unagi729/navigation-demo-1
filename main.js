@@ -6,6 +6,10 @@ const hashMap = xObject || [
     { logo: 'A', url: 'https://www.acfun.cn' },
     { logo: 'B', url: 'http://bilibili.com' }
 ]
+
+const simplifyUrl = (url) => {
+    return url.replace('http://', '').replace('https://', '').replace('www.', '')
+}
 const render = () => {
     $siteList.find('li:not(.last)').remove()
     hashMap.forEach(node => {
@@ -13,7 +17,7 @@ const render = () => {
         <a href="${node.url}">
             <div class="site">
                 <div class="logo">${node.logo}</div>
-                <div class="link">${node.url}</div>
+                <div class="link">${simplifyUrl(node.url)}</div>
             </div>
         </a>
     </li>`).insertBefore($lastLi)
@@ -26,14 +30,14 @@ $('.addButton').on('click', () => {
         url = 'https://' + url
     }
     hashMap.push({
-        logo: url[0],
+        logo: simplifyUrl(url)[0].toUpperCase(),
         url: url
     })
     render()
 
 })
 
-window.onbeforeload = () => {
+window.onbeforeunload = () => {
     const string = JSON.stringify(hashMap)
-    localStorage.setItem('x', string)//在本地设置一个x，它的值是string
+    localStorage.setItem('x', string)//在本地设置x，它的值是string
 }
