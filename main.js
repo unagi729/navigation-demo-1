@@ -8,7 +8,11 @@ const hashMap = xObject || [
 ]
 
 const simplifyUrl = (url) => {
-    return url.replace('http://', '').replace('https://', '').replace('www.', '')
+    return url
+        .replace('http://', '')
+        .replace('https://', '')
+        .replace('www.', '')
+        .replace(/\/.*/, '') //删除 / 开头的内容
 }
 const render = () => {
     $siteList.find('li:not(.last)').remove()
